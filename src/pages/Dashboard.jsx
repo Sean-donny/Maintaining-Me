@@ -21,6 +21,7 @@ import {
 } from '@tabler/icons-react';
 import { useUser } from '../hooks/useUser';
 import { userProgressGenerator } from '../utils/helper';
+import { useNavigate } from 'react-router-dom';
 
 const dashData = [
   {
@@ -98,6 +99,8 @@ function Dashboard() {
   const { user } = useUser();
   const [userProgress, setUserProgress] = useState(0);
   const [notificationVisible, setNotificationVisibility] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (user) {
       setUserProgress(
@@ -130,7 +133,7 @@ function Dashboard() {
       className={classes.card}
       padding="xl"
       component="a"
-      href={feature.href}
+      onClick={() => navigate(`${feature.href}`)}
     >
       <feature.icon size={rem(50)} stroke={2} color={theme.fn.primaryColor()} />
       <Text fz="lg" fw={500} className={classes.cardTitle} mt="md">

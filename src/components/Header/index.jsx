@@ -13,7 +13,6 @@ import {
   ActionIcon,
   useMantineColorScheme,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { useUser } from '../../hooks/useUser';
 import {
   IconLogout,
