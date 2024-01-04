@@ -1,1 +1,1 @@
-Computer Science Project for Conputer Science (Software Engineering)
+Computer Science Project for Computer Science (Software Engineering)
