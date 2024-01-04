@@ -111,20 +111,20 @@ function HeaderTabs({ tabs }) {
   const location = useLocation();
 
   const items = tabs.map(tab => (
-    <Tabs.Tab value={tab.href} key={tab.title}>
-      <Anchor className={classes.unstyledLink} href={tab.href}>
-        {tab.title}
-      </Anchor>
+    <Tabs.Tab
+      value={tab.href}
+      key={tab.title}
+      onClick={() => navigate(`${tab.href}`)}
+    >
+      {tab.title}
     </Tabs.Tab>
   ));
 
   return (
     <div className={classes.header}>
       <Container className={classes.mainSection}>
-        <Group position="apart">
-          <Anchor href="/">
-            <Image src={MaintainingMeWideLogo} height={60} fit="contain" />
-          </Anchor>
+        <Group position="apart" onClick={() => navigate('/')}>
+          <Image src={MaintainingMeWideLogo} height={60} fit="contain" />
           <Group>
             <ActionIcon
               onClick={() => toggleColorScheme()}
