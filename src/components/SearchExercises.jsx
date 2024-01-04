@@ -32,9 +32,21 @@ const SearchExercises = () => {
   }, []);
 
   const handleSearch = () => {
+    let modifiedSearch = search;
+
+    // Check if "exercise" or "exercises" is present in the search
+    if (!/exercis(e|es)?/i.test(search)) {
+      // If not, add "+exercises" to the search
+      modifiedSearch += '+exercises';
+    }
+
+    // Open the YouTube search URL with the modified search
     window.open(
-      `https://www.youtube.com/results?search_query=${search}+exercises`,
+      `https://www.youtube.com/results?search_query=${modifiedSearch.toLowerCase()}`,
     );
+
+    // Clear the search input
+    setSearch('');
   };
 
   return (
@@ -49,7 +61,7 @@ const SearchExercises = () => {
       <Container size="xl" py="xl">
         <TextInput
           value={search}
-          onChange={e => setSearch(e.target.value.toLowerCase())}
+          onChange={e => setSearch(e.target.value)}
           icon={<IconSearch size="1.1rem" stroke={1.5} />}
           radius="xl"
           size="md"
