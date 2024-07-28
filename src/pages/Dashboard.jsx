@@ -146,54 +146,55 @@ function Dashboard() {
   ));
 
   return (
-    <Container size="lg" py="xl">
-      <Title order={2} className={classes.title} ta="center" mt="sm">
-        Welcome back {user?.name}!
-      </Title>
-
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <Group spacing="xs">
-          <RingProgress
-            sections={[
-              {
-                value: userProgress,
-                color: userProgress === 100 ? 'teal' : 'blue',
-              },
-            ]}
-            label={
-              <Text
-                color={userProgress === 100 ? 'teal' : 'blue'}
-                weight={700}
-                align="center"
-                size="xl"
-              >
-                {userProgress}%
-              </Text>
-            }
-          />
-          <TypographyStylesProvider>
-            <b>
-              <u>Your progress</u>
-            </b>
-            <br />
-            Starting weight: {user?.weight.starting}kg
-            <br />
-            Current weight: {user?.weight.current}kg
-            <br />
-            Goal weight: {user?.weight.target}kg
-          </TypographyStylesProvider>
-        </Group>
-        {notificationVisible && userSuccessMessage}
-      </Paper>
-      <SimpleGrid
-        cols={3}
-        spacing="xl"
-        mt={50}
-        breakpoints={[{ maxWidth: 'md', cols: 1 }]}
-      >
-        {features}
-      </SimpleGrid>
-    </Container>
+    <div className="">
+      <Container size="lg" py="xl">
+        <Title order={2} className={classes.title} ta="center" mt="sm">
+          Welcome back {user?.name}!
+        </Title>
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          <Group spacing="xs">
+            <RingProgress
+              sections={[
+                {
+                  value: userProgress,
+                  color: userProgress === 100 ? 'teal' : 'blue',
+                },
+              ]}
+              label={
+                <Text
+                  color={userProgress === 100 ? 'teal' : 'blue'}
+                  weight={700}
+                  align="center"
+                  size="xl"
+                >
+                  {userProgress}%
+                </Text>
+              }
+            />
+            <TypographyStylesProvider>
+              <b>
+                <u>Your progress</u>
+              </b>
+              <br />
+              Starting weight: {user?.weight.starting}kg
+              <br />
+              Current weight: {user?.weight.current}kg
+              <br />
+              Goal weight: {user?.weight.target}kg
+            </TypographyStylesProvider>
+          </Group>
+          {notificationVisible && userSuccessMessage}
+        </Paper>
+        <SimpleGrid
+          cols={3}
+          spacing="xl"
+          mt={50}
+          breakpoints={[{ maxWidth: 'md', cols: 1 }]}
+        >
+          {features}
+        </SimpleGrid>
+      </Container>
+    </div>
   );
 }
 

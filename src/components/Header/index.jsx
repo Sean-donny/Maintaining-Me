@@ -123,7 +123,7 @@ function HeaderTabs({ tabs }) {
   return (
     <div className={classes.header}>
       <Container className={classes.mainSection}>
-        <Group position="apart" onClick={() => navigate('/')}>
+        <Group position="apart">
           <Image src={MaintainingMeWideLogo} height={60} fit="contain" />
           <Group>
             <ActionIcon

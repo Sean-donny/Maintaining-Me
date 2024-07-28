@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
 import { createStyles, Paper, useMantineTheme, rem } from '@mantine/core';
 import BodyPart from './BodyPart';
 import TargetImage from '../assets/images/mm-heat-card.jpg';
+import { useUser } from '../hooks/useUser';
 
 const useStyles = createStyles(() => ({
   card: {
@@ -19,30 +20,41 @@ const useStyles = createStyles(() => ({
 }));
 
 const HorizontalScrollbar = ({ data }) => {
-  const autoplay = useRef(Autoplay({ delay: 7000 }));
+  const { user } = useUser();
+  const userGender =
+    user?.gender === 'male'
+      ? 'For Men'
+      : user?.gender === 'female'
+      ? 'For Women'
+      : '';
+  const autoplay = useRef(Autoplay({ delay: 3500 }));
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const { classes } = useStyles();
 
-  const slides = data.map(item => (
-    <Carousel.Slide key={item}>
-      <Paper
-        shadow="md"
-        p="xl"
-        radius="md"
-        sx={{ backgroundImage: `url(${TargetImage})` }}
-        className={classes.card}
-        component="a"
-        target="_blank"
-        rel="noreferrer"
-        href={`https://www.youtube.com/results?search_query=${item}+exercises`}
-      >
-        <div>
-          <BodyPart item={item} />
-        </div>
-      </Paper>
-    </Carousel.Slide>
-  ));
+  const slides = useMemo(
+    () =>
+      data.map(item => (
+        <Carousel.Slide key={item}>
+          <Paper
+            shadow="md"
+            p="xl"
+            radius="md"
+            sx={{ backgroundImage: `url(${TargetImage})` }}
+            className={classes.card}
+            component="a"
+            target="_blank"
+            rel="noreferrer"
+            href={`https://www.youtube.com/results?search_query=${item}+Exercises+${userGender}`}
+          >
+            <div>
+              <BodyPart item={item} />
+            </div>
+          </Paper>
+        </Carousel.Slide>
+      )),
+    [data, userGender, classes],
+  );
 
   return (
     <Carousel
@@ -57,8 +69,8 @@ const HorizontalScrollbar = ({ data }) => {
       dragFree
       withIndicators
       plugins={[autoplay.current]}
-      onMouseEnter={autoplay.current.stop}
-      onMouseLeave={autoplay.current.reset}
+      onMouseEnter={() => autoplay.current.stop()}
+      onMouseLeave={() => autoplay.current.reset()}
     >
       {slides}
     </Carousel>

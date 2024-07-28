@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   TextInput,
   ActionIcon,
@@ -10,35 +10,56 @@ import {
   Text,
 } from '@mantine/core';
 import { IconSearch, IconArrowRight } from '@tabler/icons-react';
-import { exerciseOptions, fetchData } from '../utils/fetchData';
 import HorizontalScrollbar from '../components/HorizontalScrollbar';
+import { useUser } from '../hooks/useUser';
 
 const SearchExercises = () => {
   const theme = useMantineTheme();
+  const { user } = useUser();
   const [search, setSearch] = useState('');
-  const [bodyParts, setBodyParts] = useState([]);
 
-  useEffect(() => {
-    const fetchExercisesData = async () => {
-      const bodyPartsData = await fetchData(
-        'https://exercisedb.p.rapidapi.com/exercises/bodyPartList',
-        exerciseOptions,
-      );
+  const userGender =
+    user?.gender === 'male'
+      ? 'For Men'
+      : user?.gender === 'female'
+      ? 'For Women'
+      : '';
 
-      setBodyParts([...bodyPartsData]);
-    };
-
-    fetchExercisesData();
-  }, []);
+  const bodyParts = [
+    'Full Body',
+    'Upper Body',
+    'Lower Body',
+    'Cardio',
+    'Arms',
+    'Legs',
+    'Chest',
+    'Shoulders',
+    'Biceps',
+    'Triceps',
+    'Forearms',
+    'Traps',
+    'Neck',
+    'Abs',
+    'Upper Back',
+    'Lower Back',
+    'Full Back',
+    'Hips',
+    'Quads',
+    'Hamstrings',
+    'Calves',
+    'Glutes',
+    'Obliques',
+  ];
 
   const handleSearch = () => {
     let modifiedSearch = search;
 
     // Check if "exercise" or "exercises" is present in the search
     if (!/exercis(e|es)?/i.test(search)) {
-      // If not, add "+exercises" to the search
       modifiedSearch += '+exercises';
     }
+
+    modifiedSearch += ` ${userGender}`;
 
     // Open the YouTube search URL with the modified search
     window.open(
@@ -47,6 +68,12 @@ const SearchExercises = () => {
 
     // Clear the search input
     setSearch('');
+  };
+
+  const handleKeyDown = event => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   return (
@@ -62,6 +89,7 @@ const SearchExercises = () => {
         <TextInput
           value={search}
           onChange={e => setSearch(e.target.value)}
+          onKeyDown={handleKeyDown}
           icon={<IconSearch size="1.1rem" stroke={1.5} />}
           radius="xl"
           size="md"

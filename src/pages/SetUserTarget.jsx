@@ -93,7 +93,7 @@ const SetUserTarget = () => {
       <div className={classes.inner}>
         <div className={classes.content}>
           <Title className={classes.title}>
-            Set your goal! <br /> build a better you
+            Set your goal! <br /> Build a better you
           </Title>
           <Text color="dimmed" mt="md" mb="md">
             Select a target weigth, you aim better when you know where to hit
